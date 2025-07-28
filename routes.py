@@ -52,7 +52,7 @@ def index():
     if not user:
         flash('User not found. Please log in again.', 'danger')
         return redirect(url_for('login'))
-    return render_template('admin_dashboard.html', user=user)
+    return render_template('profile.html', user=user)
 
 @app.route('/admin_dashboard')
 @auth_admin
