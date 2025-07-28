@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Occupied Parking Spot Details</h2>
+    <table class="table table-bordered">
+        <tr><th>Spot ID</th><td>{{ spot.id }}</td></tr>
+        <tr><th>Lot ID</th><td>{{ spot.lot_id }}</td></tr>
+        <tr><th>Customer ID</th><td>{{ reservation.user_id }}</td></tr>
+        <tr><th>Vehicle Number</th><td>{{ reservation.vehicle_no }}</td></tr>
+        <tr><th>Parking Time</th><td>{{ reservation.parking_timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr>
+        <tr><th>Current Time</th><td>{{ now() }}</td></tr>
+        <tr><th>Total Cost (₹20/hr)</th><td><strong>₹{{ cost }}</strong></td></tr>
+    </table>
+
+    <a href="{{ url_for('view_or_delete_spot', spot_id=spot.id) }}" class="btn btn-secondary">Close</a>
+</div>
+{% endblock %}

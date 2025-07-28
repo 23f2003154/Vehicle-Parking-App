@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h3>View/Delete Parking Spot</h3>
+    <table class="table table-bordered">
+        <tr><th>Spot ID</th><td>{{ spot.id }}</td></tr>
+        <tr><th>Lot ID</th><td>{{ lot.id }}</td></tr>
+        <tr>
+            <th>Status</th>
+            <td>
+                {% if spot.status == 'O' %}
+                <a href="{{ url_for('occupied_spot_details', spot_id=spot.id) }}" class="text-danger fw-bold">
+                    {{ spot.status }}
+                </a>
+                {% else %}
+                {{ spot.status }}
+                {% endif %}
+            </td>
+        </tr>
+
+    </table>
+
+    <form method="POST">
+        <button type="submit" class="btn btn-danger"
+         {% if spot.status != 'A' or has_reservations%}disabled
+         {% endif %}>Delete Spot</button>
+        <a href="{{ url_for('admin_dashboard', user=user)}}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

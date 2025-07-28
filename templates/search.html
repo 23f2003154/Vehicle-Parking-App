@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h3 class="text-success">Search Parking Lots</h3>
+
+  <form class="d-flex align-items-center mb-4" method="GET" action="{{ url_for('search') }}">
+    <label class="me-2 fw-bold">Search by:</label>
+    <select name="filter" class="form-select me-2 w-auto" required>
+      <option value="user_id" {% if request.args.get('filter') == 'user_id' %}selected{% endif %}>User ID</option>
+      <option value="location" {% if request.args.get('filter') == 'location' %}selected{% endif %}>Location</option>
+      <option value="lot_id" {% if request.args.get('filter') == 'lot_id' %}selected{% endif %}>Lot ID</option>
+    </select>
+
+    <input type="text" name="query" class="form-control me-2" placeholder="Enter search value" value="{{ request.args.get('query', '') }}" required>
+
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+
+  {% if lot is not none %}
+    {% if lot %}
+      <h5 class="mb-3">Example search parking lots @<span class="text-primary">{{ location_query }}</span></h5>
+      <div class="d-flex flex-wrap">
+        {% for lot in lot %}
+          <div class="card border rounded shadow-sm p-3 m-2" style="width: 260px;">
+            <h6 class="mb-1">Parking#{{ lot.id }}</h6>
+            <div class="mb-2">
+              <a href="{{ url_for('edit_lot', lot_id=lot.id) }}" class="text-warning me-2">Edit</a>
+              <a href="{{ url_for('delete_lot', lot_id=lot.id) }}" class="text-danger">Delete</a>
+            </div>
+            <p class="mb-1 text-muted">
+              (Occupied: {{ lot.occupied }}/{{ lot.maximum_number_of_spots }})
+            </p>
+            <div class="d-flex flex-wrap">
+              {% for spot in lot.spot %}
+                {% if spot.status == 'O' %}
+                  <span class="badge bg-danger m-1">O</span>
+                {% else %}
+                  <span class="badge bg-success m-1">A</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info mt-4">No results found for "<strong>{{ location_query }}</strong>".</div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

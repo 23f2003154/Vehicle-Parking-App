@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4>Confirm Release</h4>
+            <p><strong>Spot ID:</strong> {{ reservation.spot_id }}</p>
+            <p><strong>Vehicle Number:</strong> {{ reservation.vehicle_no }}</p>
+            <p><strong>Parking Time:</strong> {{ reservation.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p><strong>Release Time:</strong> {{ now.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p><strong>Hourly Rate:</strong> ₹{{ lot.price }}</p>
+            <p><strong>Estimated Cost:</strong> ₹{{ estimated_cost }}</p>
+
+            <form method="POST">
+                <button type="submit" class="btn btn-danger">Release</button>
+                <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

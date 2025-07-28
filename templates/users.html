@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Users - Parkit
+{% endblock title %}
+
+
+{% block content %}
+<div class="header">Registered Users</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Address</th>
+                    <th>Pin Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.id }}</td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.name }}</td>
+                    <td>{{ u.address }}</td>
+                    <td>{{ u.pincode }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
+
+{% block style %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    .header {
+        text-align: center;
+        font-size: 24px;
+        margin: 20px 0;
+        font-weight: bold;
+    }
+</style>
+{% endblock style %}

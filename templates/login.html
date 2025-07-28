@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Login - Genius Parking
+{% endblock title %}
+
+{% block content %}
+<h3>User Login</h3>
+
+<form method="post" class="mt-4">
+    <label for="email" class="form-label">Registered Email:
+        <input type="email" name="email" id="email" class="form-control" required/>
+    </label>
+    <label for="password" class="form-label">Password:
+        <input type="password" name="password" id="password" class="form-control" required/>
+    </label>
+    
+    <input type="submit" value="Login" class="btn btn-primary">
+</form>
+
+<p><a href="{{ url_for('register') }}">Create Account?</a></p>
+
+
+{% endblock content %}
+{% block style %}
+
+<style>
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h3 {
+        margin-top: 64px;
+        text-align: center;
+    }
+    p {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+{% endblock  %}

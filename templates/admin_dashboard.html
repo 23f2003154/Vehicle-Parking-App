@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Admin Dashboard - Genius Parking
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Parking Lots</h2>
+
+     <div class="row">
+        {% for lot in parking_lot %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Parking #{{ lot.id }}</h5>
+                    <p>
+                        <strong>Location:</strong> {{ lot.prime_location_name }}<br>
+                        <strong>Address:</strong> {{ lot.address }}<br>
+                        <strong>Pincode:</strong> {{ lot.pincode }}<br>
+                        <strong>Price/hr:</strong> ₹{{ lot.price }}
+                    </p>
+                    <p class="text-success">
+                        (Occupied: {{ lot.occupied }} / {{ lot.maximum_number_of_spots }})
+                    </p>
+                    
+                    <div class="d-flex flex-wrap">
+                        {% for parking_spot in lot.parking_spot %}
+                            <a href="{{ url_for('view_or_delete_spot', spot_id=parking_spot.id) }}"
+                                class="m-1 p-2 rounded text-white text-decoration-none d-block 
+                                    {% if parking_spot.status == 'O' %}bg-danger{% else %}bg-success{% endif %}">
+                                {{ parking_spot.status }}
+                            </a>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mt-3">
+                        <a href="{{ url_for('edit_lot', lot_id=lot.id) }}" class="btn btn-sm btn-warning">Edit Lot</a>
+                        <a href="{{ url_for('delete_lot', lot_id=lot.id) }}" class="btn btn-sm btn-danger">Delete Lot</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-center">No parking lots available.</p>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('add_lot') }}" class="btn btn-primary">
+        <i class="fas fa-plus fa-xs"></i>
+          Add Lot</a>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block style %}
+<style>
+   
+.d-flex flex-wrap{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 10px;
+    width: 100%;
+}
+
+</style>
+
+{% endblock  %}

@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h4>Book the Parking Spot for Spot ID: {{ spot.id }}</h4>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="vehicle_number">Vehicle Number:</label>
+        <input type="text" class="form-control" name="vehicle_number" required>
+    </div>
+    <div class='d-flex gap-2 mt-3'>
+    <button type="submit" class="btn btn-success mt-2">Reserve</button>
+    <button type="button" class="btn btn-secondary mt-2" onclick="history.back()">Cancel</button>
+    </div>
+</form>
+{% endblock %}

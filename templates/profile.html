@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Profile - Genius Parking
+{% endblock title %}
+
+{% block content %}
+<h1>Profile
+    <small class="text-muted">(@{{user.email}})</small>
+</h1>
+<hr>
+<h3>Edit Profile</h3>
+
+<form method="post">
+    <label for="fullname" class="form-label">Fullname:
+        <input type="text" name="fullname" id="fullname" class="form-control" value="{{user.name}}" required >
+    </label>
+    <label for="email" class="form-label">Registered Email(Username):
+        <input type="email" name="email" id="email" class="form-control" value="{{user.email}}" required >
+    </label>
+    <label for="address" class="form-label">Address:
+        <input type="text" name="address" id="address" class="form-control" value="{{user.address}}" required>
+    </label>
+    <label for="pincode" class="form-label">Pincode:
+        <input type="text" name="pincode" id="pincode" class="form-control" value="{{user.pincode}}" required>
+    </label>
+    <label for="password" class="form-label">New Password:
+        <input type="password" name="password" id="password" class="form-control" required>
+    </label> 
+    <label for="npassword" class="form-label">Current Password:
+        <input type="text" name="npassword" id="npassword" class="form-control" required>
+    </label> 
+    <input type="submit" value="Update Password" class="btn btn-success"/>
+</form>
+{% endblock  %}
+
+{% block style %}
+<style>
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1,h2,h3{
+        text-align: center;
+      }
+    </style>
+{% endblock  %}

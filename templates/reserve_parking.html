@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h3>Reserve a Spot at {{ lot.prime_location_name }}</h3>
+
+{% if available_spots %}
+    <ul class="list-group">
+        {% for spot in available_spots %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Spot ID: {{ spot.id }}
+            <a href="{{ url_for('reserve_spot', spot_id=spot.id) }}" class="btn btn-primary btn-sm">Reserve</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No available spots at the moment.</p>
+{% endif %}
+
+<a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary mt-3">Back</a>
+{% endblock %}

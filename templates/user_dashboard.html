@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center text-danger">User Dashboard</h2>
+
+    <!-- Recent Parking History -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Recent Parking History</div>
+        <div class="card-body">
+            <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Location</th>
+                        <th>Vehicle No</th>
+                        <th>Timestamp</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for res in history %}
+                    <tr>
+                        <td>{{ res.id }}</td>
+                        <td>{{ res.parking_lot.address }}</td>
+                        <td>{{ res.vehicle_no }}</td>
+                        <td>{{ res.parking_timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
+                        <td>
+                            {% if not res.leaving_timestamp %}
+                                <a href="{{ url_for('release_parking', reservation_id=res.id) }}" class="btn btn-danger btn-sm">Release</a>
+                            {% else %}
+                                <span class="badge bg-success">Parked Out</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5">No reservations found</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{{ url_for('user_dashboard') }}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="prime_location_name" class="form-control" placeholder="Search parking @location/pin code" value="{{ search_query }}">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <!-- Parking Lots -->
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            Parking Lots @ {{ search_query if search_query else 'All' }}
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Address</th>
+                        <th>Availability</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lot in parking_lot %}
+                    <tr>
+                        <td>{{ lot.id }}</td>
+                        <td>{{ lot.address }}</td>
+                        <td>{{ lot.available }}</td>
+    
+                        <td>
+                        {% if lot.available == 0 %}
+                            <button class="btn btn-secondary btn-sm" disabled>Full</button>
+                        {% else %}
+                            <a href="{{ url_for('reserve_parking', lot_id=lot.id) }}" class="btn btn-success btn-sm">Book</a>
+                        {% endif %}
+                        </td>
+
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4">No parking lots found</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

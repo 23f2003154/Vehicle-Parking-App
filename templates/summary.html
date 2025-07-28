@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}Parking Summary{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Parking Lot Summary</h1>
+
+<h5>Revenue per Parking Lot</h5>
+<canvas id="revenueChart" width="400" height="200"></canvas>
+
+<h5 class="mt-5">Available vs Occupied Spots</h5>
+<canvas id="statusChart" width="400" height="200"></canvas>
+
+<script>
+  // Revenue Chart
+const revenueLabels = {{ labels | tojson }};
+const revenueData = {
+  labels: revenueLabels,
+  datasets: [{
+    label: 'Revenue',
+    data: {{ values | tojson }},
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.6)',
+      'rgba(54, 162, 235, 0.6)',
+      'rgba(255, 206, 86, 0.6)',
+      'rgba(75, 192, 192, 0.6)',
+      'rgba(153, 102, 255, 0.6)'
+    ],
+    borderColor: '#fff',
+    borderWidth: 1
+  }]
+};
+
+const revenueConfig = {
+  type: 'pie',
+  data: revenueData,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top' },
+      title: {
+        display: true,
+        text: 'Revenue Share from Each Parking Lot'
+      }
+    }
+  }
+};
+  // Status Chart
+  const statusLabels = {{ status_labels | tojson }};
+  const statusData = {
+    labels: statusLabels,
+    datasets: [
+      {
+        label: 'Available',
+        data: {{ available_values | tojson }},
+        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      },
+      {
+        label: 'Occupied',
+        data: {{ occupied_values | tojson }},
+        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }
+    ]
+  };
+
+  const statusConfig = {
+    type: 'bar',
+    data: statusData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  };
+
+  new Chart(document.getElementById('revenueChart'), revenueConfig);
+  new Chart(document.getElementById('statusChart'), statusConfig);
+</script>
+{% endblock %}
