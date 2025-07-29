@@ -402,7 +402,7 @@ def summary():
     .group_by(Parking_Lot.prime_location_name).all()
 
     revenue_labels = [location for location, _ in revenue_info]
-    revenue_values = [float(revenue) for _, revenue in revenue_info]
+    revenue_values = [float(revenue or 0) for _, revenue in revenue_info]
 
     # Occupied vs Available chart data
     status_info = db.session.query(
