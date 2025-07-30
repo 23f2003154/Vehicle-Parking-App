@@ -348,10 +348,9 @@ def occupied_spot_details(spot_id):
         return redirect(url_for('view_or_delete_spot', spot_id=spot_id))
 
     # Calculate cost
-    from datetime import datetime
-    time_parked = datetime.now() - reservation.parking_timestamp
+    time_parked = datetime.utcnow() - reservation.parking_timestamp
     hours = max(1, int(time_parked.total_seconds() // 3600))  
-    cost = hours * 20  
+    cost = hours * spot.parking_lot.price
 
     return render_template('occupied_spot_details.html',
                            spot=spot,

@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.context_processor
 def inject_now():
-    return {'now': lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+    return {'now': lambda: datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}
 
 import config
 

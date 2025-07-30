@@ -10,7 +10,7 @@
         <tr><th>Vehicle Number</th><td>{{ reservation.vehicle_no }}</td></tr>
         <tr><th>Parking Time</th><td>{{ reservation.parking_timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr>
         <tr><th>Current Time</th><td>{{ now() }}</td></tr>
-        <tr><th>Total Cost (₹20/hr)</th><td><strong>₹{{ cost }}</strong></td></tr>
+        <tr><th>Total Cost</th><td><strong>₹{{ cost }}</strong></td></tr>
     </table>
 
     <a href="{{ url_for('view_or_delete_spot', spot_id=spot.id) }}" class="btn btn-secondary">Close</a>
